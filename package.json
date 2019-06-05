@@ -1,0 +1,11 @@
+{
+  "name": "ssgit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "shaojianheng",
+  "dependencies": {
+    "shelljs": "^0.8.3",
+    "yargs": "^13.2.4"
+  },
+  "license": "MIT"
+}
