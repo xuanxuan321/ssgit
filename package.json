@@ -2,9 +2,9 @@
   "name": "ssgit",
   "version": "1.0.0",
   "author": "shaojianheng",
-  "main": "hello.js",
+  "main": "index.js",
   "bin": {
-    "hello": "hello.js"
+    "ssgit": "index.js"
   },
   "dependencies": {
     "shelljs": "^0.8.3",
