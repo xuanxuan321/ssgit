@@ -1,10 +1,10 @@
 {
-  "name": "wptgit",
+  "name": "ssgit",
   "version": "1.0.0",
   "author": "shaojianheng",
   "main": "index.js",
   "bin": {
-    "wptgitLocal": "index.js"
+    "ssgitLocal": "index.js"
   },
   "dependencies": {
     "shelljs": "^0.8.3",
@@ -13,11 +13,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xuanxuan321/wptgit"
+    "url": "https://github.com/xuanxuan321/ssgit"
   },
   "keywords": [
     "git",
+    "ssgit",
     "sgit",
-    "wptgit"
+    "segit",
+    "easygit",
+    "supereasygit"
   ]
 }
