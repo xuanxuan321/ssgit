@@ -16,6 +16,7 @@ var argv = require('yargs')
   })
   .option('commitAndMerge', {
     alias: 'm',
+    demand: true,
     describe: 'message about commit&merge',
     type: 'string'
   })
@@ -38,30 +39,27 @@ var argv = require('yargs')
   .argv;
 
 let order = '';
+// console.log(1111,order,argv.m,argv.t,argv.s,argv.c);
 if (argv.c) {
-  order=`${argv.b ? 'npm run build' : 'npm -v'}&&
-  git add -A&&
-  git commit  -m ${argv.m}&&
-  git push&&
-  git checkout ${argv.s})`
+  order = `${
+    argv.b ? 'npm run build&&git add -A&&git commit  -m ' + argv.m + '&&git push&&git checkout ' + argv.s : 
+    '(git add -A&&git commit  -m ' + argv.m + '&&git push&&git checkout ' + argv.s+')||(git push&&git checkout '+ argv.s+')'
+  }`
+  console.log(order);
 } else {
-  order=`(git pull&&
+  order =`(git pull&&
     git add -A&&
     git commit  -m  ${argv.m}&&
     git push&&git checkout ${argv.t}&&
     git pull&&
     git merge ${argv.s} -m ${argv.m}&&
-    ${argv.b?'npm run build':'npm -v'}&&
-    git add -A&&
-    git commit  -m ${argv.m}&&
+    ${argv.b?'npm run build&&git add -A&&git commit  -m '+argv.m:'npm -v'}&&
     git push&&
     git checkout ${argv.s})||
     (git checkout ${argv.t}&&
     git pull&&
     git merge ${argv.s} -m ${argv.m}&&
-    ${argv.b?'npm run build':'npm -v'}&&
-    git add -A&&
-    git commit  -m ${argv.m}&&
+    ${argv.b?'npm run build&&git add -A&&git commit  -m '+argv.m:'npm -v'}&&
     git push&&
     git checkout ${argv.s})`
 };
