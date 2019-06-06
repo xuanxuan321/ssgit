@@ -20,6 +20,5 @@ Usage: ssgit [options]
 示例：
   ssgit -t=t -s=feature/search -m='commit'
 
-缺少这些必须的选项：  source, commitAndMerge
 
 
