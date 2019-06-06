@@ -1,10 +1,10 @@
 {
-  "name": "ssgit",
+  "name": "wptgit",
   "version": "1.0.0",
   "author": "shaojianheng",
   "main": "index.js",
   "bin": {
-    "ssgit": "index.js"
+    "wptgit": "index.js"
   },
   "dependencies": {
     "shelljs": "^0.8.3",
