@@ -1,11 +1,8 @@
 {
   "name": "ssgit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "shaojianheng",
   "main": "index.js",
-  "bin": {
-    "ssgitLocal": "index.js"
-  },
   "dependencies": {
     "shelljs": "^0.8.3",
     "yargs": "^13.2.4"
