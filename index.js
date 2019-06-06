@@ -39,13 +39,12 @@ var argv = require('yargs')
   .argv;
 
 let order = '';
-// console.log(1111,order,argv.m,argv.t,argv.s,argv.c);
+
 if (argv.c) {
   order = `${
     argv.b ? 'npm run build&&git add -A&&git commit  -m ' + argv.m + '&&git push&&git checkout ' + argv.s : 
     '(git add -A&&git commit  -m ' + argv.m + '&&git push&&git checkout ' + argv.s+')||(git push&&git checkout '+ argv.s+')'
   }`
-  console.log(order);
 } else {
   order =`(git pull&&
     git add -A&&
@@ -63,4 +62,5 @@ if (argv.c) {
     git push&&
     git checkout ${argv.s})`
 };
+console.log(order);
 shell.exec(order);
