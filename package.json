@@ -10,5 +10,14 @@
     "shelljs": "^0.8.3",
     "yargs": "^13.2.4"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xuanxuan321/wptgit"
+  },
+  "keywords": [
+    "git",
+    "sgit",
+    "wptgit"
+  ]
 }
