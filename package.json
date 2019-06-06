@@ -4,7 +4,7 @@
   "author": "shaojianheng",
   "main": "index.js",
   "bin": {
-    "wptgit": "index.js"
+    "wptgitLocal": "index.js"
   },
   "dependencies": {
     "shelljs": "^0.8.3",

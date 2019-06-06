@@ -36,6 +36,9 @@ var argv = require('yargs')
     describe: 'Whether to pack locally',
     type: 'string'
   })
+  .usage('Usage: wptgit [options]')
+  .example(" wptgit -t=t -s=feature/search -m='commit' ")
+  .alias('h', 'help')
   .argv;
 
 let order = '';
