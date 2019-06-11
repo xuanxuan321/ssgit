@@ -35,7 +35,7 @@ const argv = require("yargs")
 	.usage("Usage: ssgit [options] or ssgit message[string]")
 	.example(" ssgit fix:change number ")
 	.alias("h", "help")
-  .alias("v", "version").argv;
+	.alias("v", "version").argv;
 //更改默认值
 if (argv.bdefalut || argv.tdefalut) {
 	if (argv.tdefalut) {
@@ -46,12 +46,12 @@ if (argv.bdefalut || argv.tdefalut) {
 	}
 	jsonfile.writeFileSync(file, jsonObj);
 }
-//获取当前所在分支
-argv.s = shell.exec("git rev-parse --abbrev-ref HEAD");;
+//获取当前所在分支,必须要使用trim,否则会出现意外的字符换行,导致脚本不能正常运行
+argv.s = shell.exec("git rev-parse --abbrev-ref HEAD").trim();
 argv.t = argv.t || jsonObj.target;
 argv.b = argv.b === undefined ? jsonObj.build : argv.b;
 //设置提交信息
-argv.m = argv._.join(' ');
+argv.m = argv._.join(" ");
 //非配置默认
 if (!(argv.bdefalut || argv.tdefalut)) {
 	if (argv._.length === 0) {
@@ -71,6 +71,13 @@ if (argv.c) {
     git add -A&&
     git commit -m ${argv.m}&&
     git push&&git checkout ${argv.t}&&
+    git pull&&
+    git merge ${argv.s} -m ${argv.m}&&
+    ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m : "npm -v"}&&
+		git push&&
+    git checkout ${argv.s})||
+		(git push&&
+		git checkout ${argv.t}&&
     git pull&&
     git merge ${argv.s} -m ${argv.m}&&
     ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m : "npm -v"}&&
