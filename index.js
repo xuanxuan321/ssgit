@@ -69,19 +69,14 @@ if (argv.c) {
 } else {
 	order = `(git pull&&
     git add -A&&
-    git commit  -m  ${argv.m}&&
+    git commit -m ${argv.m}&&
     git push&&git checkout ${argv.t}&&
-    git pull&&
-    git merge ${argv.s} -m ${argv.m}&&
-    ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m : "npm -v"}&&
-    git push&&
-    git checkout ${argv.s})||
-    (git checkout ${argv.t}&&
     git pull&&
     git merge ${argv.s} -m ${argv.m}&&
     ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m : "npm -v"}&&
     git push&&
     git checkout ${argv.s})`;
 }
-// console.log(chalk.red(`${argv.t} ${argv.s} ${argv.b} ${argv.c} ${argv.m}`));
+// console.log(chalk.red(`${argv.b} ${argv.c} ${argv.m}`));
+console.log(chalk.green(`${order}`));
 shell.exec(order)
