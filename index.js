@@ -83,5 +83,5 @@ if (argv.c) {
     git push&&
     git checkout ${argv.s})`;
 }
-console.log(chalk.red(`${argv.t} ${argv.s} ${argv.b} ${argv.c} ${argv.m}`));
+// console.log(chalk.red(`${argv.t} ${argv.s} ${argv.b} ${argv.c} ${argv.m}`));
 shell.exec(order)
