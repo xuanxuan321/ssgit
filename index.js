@@ -70,7 +70,8 @@ if (argv.c) {
 	order = `(git pull&&
     git add -A&&
     git commit -m ${argv.m}&&
-    git push&&git checkout ${argv.t}&&
+		git push&&
+		git checkout ${argv.t}&&
     git pull&&
     git merge ${argv.s} -m ${argv.m}&&
     ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m : "npm -v"}&&
