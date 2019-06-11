@@ -1,69 +1,87 @@
 #!/usr/bin/env node
-var shell = require("shelljs");
-var argv = require('yargs')
-  .option('target', {
-    alias : 't',
-    demand: true,
-    default: 't',
-    describe: 'target branch',
-    type: 'string'
-  })
-  .option('source', {
-    alias : 's',
-    demand: true,
-    describe: 'source branch',
-    type: 'string'
-  })
-  .option('commitAndMerge', {
-    alias: 'm',
-    demand: true,
-    describe: 'message about commit&merge',
-    type: 'string'
-  })
-  .option('conflict', {
-    alias: 'c',
-    demand: true,
-    boolean: true,
-    default: false,
-    describe: 'Whether conflicts have been resolved',
-    type: 'string'
-  })
-  .option('build', {
-    alias: 'b',
-    demand: true,
-    boolean: true,
-    default: false,
-    describe: 'Whether to pack locally',
-    type: 'string'
-  })
-  .usage('Usage: ssgit [options]')
-  .example(" ssgit -t=t -s=feature/search -m='commit' ")
-  .alias('h', 'help')
-  .argv;
+const shell = require("shelljs");
+const jsonfile = require("jsonfile");
+const chalk = require("chalk");
+const file = `${__dirname}/default.json`;
+let jsonObj = jsonfile.readFileSync(file);
 
-let order = '';
-
+const argv = require("yargs")
+	.option("target", {
+		alias: "t",
+		describe: "target branch, default value is t",
+		type: "string"
+	})
+	.option("conflict", {
+		alias: "c",
+		boolean: true,
+		type: "boolean",
+		describe: "Whether conflicts have been resolved"
+	})
+	.option("build", {
+		alias: "b",
+		boolean: true,
+		describe: "Whether to pack locally, default value is false",
+		type: "boolean"
+	})
+	.option("tdefalut", {
+		describe: "set default value for the target branch",
+		type: "string"
+	})
+	.option("bdefalut", {
+		describe: "set default value for whether to package locally ",
+		type: "boolean",
+		boolean: true
+	})
+	.usage("Usage: ssgit [options] or ssgit message[string]")
+	.example(" ssgit fix:change number ")
+	.alias("h", "help")
+  .alias("v", "version").argv;
+//更改默认值
+if (argv.bdefalut || argv.tdefalut) {
+	if (argv.tdefalut) {
+		jsonObj = { ...jsonObj, target: argv.tdefalut };
+	}
+	if (argv.bdefalut) {
+		jsonObj = { ...jsonObj, build: argv.bdefalut };
+	}
+	jsonfile.writeFileSync(file, jsonObj);
+}
+//获取当前所在分支
+argv.s = shell.exec("git rev-parse --abbrev-ref HEAD");;
+argv.t = argv.t || jsonObj.target;
+argv.b = argv.b === undefined ? jsonObj.build : argv.b;
+//设置提交信息
+argv.m = argv._.join(' ');
+//非配置默认
+if (!(argv.bdefalut || argv.tdefalut)) {
+	if (argv._.length === 0) {
+		throw new Error(chalk.red.bold("Please enter commit information "));
+	}
+}
+//设置分支切换时的命令
+let order = "";
 if (argv.c) {
-  order = `${
-    argv.b ? 'npm run build&&git add -A&&git commit  -m ' + argv.m + '&&git push&&git checkout ' + argv.s : 
-    '(git add -A&&git commit  -m ' + argv.m + '&&git push&&git checkout ' + argv.s+')||(git push&&git checkout '+ argv.s+')'
-  }`
+	order = `${
+		argv.b
+			? "npm run build&&git add -A&&git commit  -m " + argv.m + "&&git push&&git checkout " + argv.s
+			: "(git add -A&&git commit  -m " + argv.m + "&&git push&&git checkout " + argv.s + ")||(git push&&git checkout " + argv.s + ")"
+	}`;
 } else {
-  order =`(git pull&&
+	order = `(git pull&&
     git add -A&&
     git commit  -m  ${argv.m}&&
     git push&&git checkout ${argv.t}&&
     git pull&&
     git merge ${argv.s} -m ${argv.m}&&
-    ${argv.b?'npm run build&&git add -A&&git commit  -m '+argv.m:'npm -v'}&&
+    ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m : "npm -v"}&&
     git push&&
     git checkout ${argv.s})||
     (git checkout ${argv.t}&&
     git pull&&
     git merge ${argv.s} -m ${argv.m}&&
-    ${argv.b?'npm run build&&git add -A&&git commit  -m '+argv.m:'npm -v'}&&
+    ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m : "npm -v"}&&
     git push&&
-    git checkout ${argv.s})`
-};
-console.log(order);
-shell.exec(order);
+    git checkout ${argv.s})`;
+}
+console.log(chalk.red(`${argv.t} ${argv.s} ${argv.b} ${argv.c} ${argv.m}`));
+shell.exec(order)
