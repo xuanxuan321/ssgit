@@ -1,10 +1,10 @@
 {
-  "name": "ss",
-  "version": "1.1.0",
+  "name": "ssgit",
+  "version": "2.0.0",
   "author": "shaojianheng",
   "main": "index.js",
   "bin": {
-    "ss": "index.js"
+    "ssgit": "index.js"
   },
   "dependencies": {
     "chalk": "^2.4.2",
