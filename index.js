@@ -80,6 +80,7 @@ if (!argv.c) {
 argv.b = argv.b !== undefined ? argv.b:jsonObj.build;
 //设置提交信息
 argv.m = argv._.join(" ");
+argv.m = '\'' + argv.m + '\'';
 //切换分支操作提交信息必填
 if (!(argv.bdefalut !== undefined || argv.tdefalut !== undefined || argv.defalutValue)) {
 	if (argv._.length === 0) {
