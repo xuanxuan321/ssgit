@@ -17,6 +17,12 @@ const argv = require("yargs")
 		type: "boolean",
 		describe: "Whether conflicts have been resolved"
 	})
+	.option("local", {
+		alias: "l",
+		boolean: true,
+		type: "boolean",
+		describe: "just commit changes and push ,no merge"
+	})
 	.option("build", {
 		alias: "b",
 		boolean: true,
@@ -80,6 +86,7 @@ if (!argv.c) {
 argv.b = argv.b !== undefined ? argv.b:jsonObj.build;
 //设置提交信息
 argv.m = argv._.join(" ");
+//为了提交信息支持空格
 argv.m = '\'' + argv.m + '\'';
 //切换分支操作提交信息必填
 if (!(argv.bdefalut !== undefined || argv.tdefalut !== undefined || argv.defalutValue)) {
@@ -87,7 +94,21 @@ if (!(argv.bdefalut !== undefined || argv.tdefalut !== undefined || argv.defalut
 		throw new Error(chalk.red.bold("Please enter commit information "));
 	}
 }
-//设置分支切换时的命令
+if (argv.l) {
+	let order = `(git pull&& git add -A&& git commit -m ${argv.m}&& git push) || git push`;
+	let order2 = `git push -u origin ${argv.s}`;
+	//只是提交本地变化并且推送到远程
+	shell.exec(order, (error, stdout, stderr) => {
+		//判断是否与远程分支关联
+		let isfirst = /git push origin HEAD/.test(stderr);
+		if (isfirst) {
+			console.log(chalk.green(order2))
+		shell.exec(order2)
+	}
+	});
+	return
+}
+//设置分支切换时的命令 
 let order = "";
 if (argv.c) {
 	order = `${
@@ -115,9 +136,23 @@ if (argv.c) {
     git checkout ${argv.s})`;
 }
 //输出命令到控制台
-console.log(chalk.green(`${order}`));
+console.log(chalk.green(order))
 //执行命令
-shell.exec(order);
+shell.exec(order, (error, stdout, stderr) => {
+	//判断是否与远程分支关联
+	let isfirst = /git push origin HEAD/.test(stderr);
+	if (isfirst) {
+		let order2=`git push -u origin ${argv.s}&&
+			git checkout ${argv.t}&&
+			git pull&&
+			git merge ${argv.s} -m ${argv.m}&&
+			${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m+"&&" : ""}
+			git push&&
+			git checkout ${argv.s}`
+			console.log(chalk.green(order2))
+		shell.exec(order2)
+	}
+});
 if (!argv.c) {
 	//更新文件中的prevtarget的值,将写操作放在末尾,可以避免阻塞分支的切换
 	jsonfile.writeFileSync(file, jsonObj);
