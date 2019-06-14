@@ -7,6 +7,8 @@ Usage: ssgit [options] or ssgit message[string]
 
   --conflict, -c &nbsp; &nbsp;     Whether conflicts have been resolved  &nbsp; &nbsp;              [布尔]
 
+  --local, -l   &nbsp; &nbsp;      just commit changes and push ,no merge  &nbsp; &nbsp;            [布尔]
+
   --build, -b  &nbsp; &nbsp;       Whether to pack locally, default value is false &nbsp; &nbsp;    [布尔]
 
   --defalutValue, -d&nbsp; &nbsp;  get the current default value  &nbsp; &nbsp;                     [布尔]
