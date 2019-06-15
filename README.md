@@ -20,7 +20,7 @@ git checkout feature/search
 Usage: ssgit [options] or ssgit message[string]
 
 选项：
-  --target, -t &nbsp; &nbsp;       你要合并到的目标分支,默认值是t &nbsp; &nbsp;                [字符串]
+  --target, -t &nbsp; &nbsp;       要合并到的目标分支,默认值是t &nbsp; &nbsp;                [字符串]
 
   --conflict, -c &nbsp; &nbsp;      合分支时是否遇到冲突,并且已经解决  &nbsp; &nbsp;              [布尔]
 

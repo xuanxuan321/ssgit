@@ -8,39 +8,39 @@ let jsonObj = jsonfile.readFileSync(file);
 const argv = require("yargs")
 	.option("target", {
 		alias: "t",
-		describe: "target branch, default value is t",
+		describe: "要合并到的目标分支,默认值是t",
 		type: "string"
 	})
 	.option("conflict", {
 		alias: "c",
 		boolean: true,
 		type: "boolean",
-		describe: "Whether conflicts have been resolved"
+		describe: "合分支时是否遇到冲突,并且已经解决"
 	})
 	.option("local", {
 		alias: "l",
 		boolean: true,
 		type: "boolean",
-		describe: "just commit changes and push ,no merge"
+		describe: "只简单地提交本地改动到远程,不涉及分支的切换以及合并"
 	})
 	.option("build", {
 		alias: "b",
 		boolean: true,
-		describe: "Whether to pack locally, default value is false",
+		describe: "是否要在目标分支进行打包, 默认不打包",
 		type: "boolean"
 	})
 	.option("defalutValue", {
 		alias: "d",
-		describe: "get the current default value ",
+		describe: "获取当前的默认值",
 		boolean: true,
 		type: "boolean"
 	})
 	.option("tdefalut", {
-		describe: "set default value for the target branch",
+		describe: "修改目标分支的默认值",
 		type: "string"
 	})
 	.option("bdefalut", {
-		describe: "set default value for whether to package locally ",
+		describe: "修改是否要在目标分支进行打包的默认配置",
 		type: "boolean"
 	})
 	.usage("Usage: ssgit [options] or ssgit message[string]")
