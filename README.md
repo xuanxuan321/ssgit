@@ -13,8 +13,8 @@ git push
 git checkout feature/search 
 ```
 有的时候在t分支上进行merge操作时,会有冲突,解决完冲突,还要打包,这样又会有一些额外的操作...
-现在,通通交给ssgit就行了,简单的 <font color=#0099ff size=4 face="黑体">*ssgit 'fix:bug'*</font>,就能将上述的操作全部执行完(提交信息可以不加引号,同时支持空格分隔),
-你不需要关注你当前的分支处于什么状态,不管是未暂存,未提交还是未推送等等,<font color=#0099ff size=4 face="黑体">*ssgit*</font>全部都能兼容
+现在,通通交给ssgit就行了,简单的 *`ssgit 'fix:bug'`*,就能将上述的操作全部执行完(提交信息可以不加引号,同时支持空格分隔),
+你不需要关注你当前的分支处于什么状态,不管是未暂存,未提交还是未推送等等,*`ssgit`* 全部都能兼容
 
 ## usage
 Usage: ssgit [options] or ssgit message[string]
@@ -39,19 +39,19 @@ Usage: ssgit [options] or ssgit message[string]
   -v, --version &nbsp; &nbsp;      显示版本号 &nbsp; &nbsp;                                         [布尔]
 
 ##使用示例：
-* 将当前分支的改动推送到远程的t分支(t分支是默认值时可以省略不写)然后又切回当前分支,提交信息为addThings
-  <font color=#0099ff size=4 face="黑体">*ssgit addThings*</font>
-* 将当前分支的改动推送到远程的的t分支然后又切回当前分支,同时需要在t分支上执行打包操作,提交信息为addThings,打包使用的脚本命令时npm run build
-  <font color=#0099ff size=4 face="黑体">*ssgit addThings -b*</font>
-* 将当前分支的改动推送到远程的t分支然后又切回当前分支,执行该操作过程中,在t上进行merge操作时,有冲突被中断,解决完冲突后,想继续之前的操作
-  <font color=#0099ff size=4 face="黑体">*ssgit addThings -c*</font>
-* 将当前分支的改动推送到远程的test分支然后又切回当前分支,提交信息为addThings
-  <font color=#0099ff size=4 face="黑体">*ssgit -t=test addThings*</font>
-* 修改默认分支为dev
-  <font color=#0099ff size=4 face="黑体">*ssgit --tdefalut=dev*</font>
-* 默认在目标分支进行打包操作
-  <font color=#0099ff size=4 face="黑体">*ssgit --bdefalut=true*</font>
-* 获取默认配置的值
-  <font color=#0099ff size=4 face="黑体">*ssgit -d*</font>
-* 只简单地提交本地改动到远程,不涉及分支的切换以及合并 ,提交信息为addThings
-  <font color=#0099ff size=4 face="黑体">*ssgit addThings -l*</font>
+* 将当前分支的改动推送到远程的t分支(t分支是默认值时可以省略不写)然后又切回当前分支,提交信息为addThings  
+  *`ssgit addThings`*
+* 将当前分支的改动推送到远程的的t分支然后又切回当前分支,同时需要在t分支上执行打包操作,提交信息为addThings,打包使用的脚本命令时npm run build  
+  *`ssgit addThings -b`*
+* 将当前分支的改动推送到远程的t分支然后又切回当前分支,执行该操作过程中,在t上进行merge操作时,有冲突被中断,解决完冲突后,想继续之前的操作  
+  *`ssgit addThings -c`*
+* 将当前分支的改动推送到远程的test分支然后又切回当前分支,提交信息为addThings  
+  *`ssgit -t=test addThings`*
+* 修改默认分支为dev  
+  *`ssgit --tdefalut=dev`*
+* 默认在目标分支进行打包操作  
+  *`ssgit --bdefalut=true`*  
+* 获取默认配置的值  
+  *`ssgit -d`*
+* 只简单地提交本地改动到远程,不涉及分支的切换以及合并 ,提交信息为addThings  
+  *`ssgit addThings -l`*
