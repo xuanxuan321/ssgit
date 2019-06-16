@@ -1,4 +1,9 @@
-## introduction
+## 安装
+```
+npm i -g ssgit
+```
+
+## 介绍
 在日常生活中,分支的切换以及合并是相当频繁且繁琐的一件事,比如你当前在feature/add分支,此时你需要将你的改动推送到远程的t分支
 然后再切换回源分支(feature/add),考虑到你的分支可能还有其他人在开发,你需要经历以下操作
 ```
@@ -16,7 +21,7 @@ git checkout feature/search
 现在,通通交给ssgit就行了,简单的 *`ssgit 'fix:bug'`*,就能将上述的操作全部执行完(提交信息可以不加引号,同时支持空格分隔),
 你不需要关注你当前的分支处于什么状态,不管是未暂存,未提交还是未推送等等,*`ssgit`* 全部都能兼容
 
-## usage
+## 使用方式
 Usage: ssgit [options] or ssgit message[string]
 
 选项：

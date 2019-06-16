@@ -1,6 +1,6 @@
 {
   "name": "ssgit",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "author": "shaojianheng",
   "main": "index.js",
   "bin": {
