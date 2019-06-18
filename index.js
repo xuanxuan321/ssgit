@@ -117,20 +117,21 @@ if (argv.c) {
 			: "(git add -A&&git commit  -m " + argv.m + "&&git push&&git checkout " + argv.t + ")||(git push&&git checkout " + argv.t + ")"
 	}`;
 } else {
+	let mergeMessage=`'Merge branch ${argv.s} into ${argv.t}'`
 	order = `(git pull&&
     git add -A&&
     git commit -m ${argv.m}&&
     git push&&
     git checkout ${argv.t}&&
     git pull&&
-    git merge ${argv.s} -m ${argv.m}&&
+    git merge ${argv.s} -m ${mergeMessage}&&
     ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m+"&&" : ""}
     git push&&
     git checkout ${argv.s})||
     (git push&&
     git checkout ${argv.t}&&
     git pull&&
-    git merge ${argv.s} -m ${argv.m}&&
+    git merge ${mergeMessage} -m ${argv.m}&&
     ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m+"&&" : ""}
     git push&&
     git checkout ${argv.s})`;
@@ -142,10 +143,11 @@ shell.exec(order, (error, stdout, stderr) => {
 	//判断是否与远程分支关联
 	let isfirst = /git push origin HEAD/.test(stderr);
 	if (isfirst) {
+		let mergeMessage=`'Merge branch ${argv.s} into ${argv.t}'`
 		let order2=`git push -u origin ${argv.s}&&
 			git checkout ${argv.t}&&
 			git pull&&
-			git merge ${argv.s} -m ${argv.m}&&
+			git merge ${mergeMessage} -m ${argv.m}&&
 			${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m+"&&" : ""}
 			git push&&
 			git checkout ${argv.s}`
