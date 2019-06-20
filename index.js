@@ -131,7 +131,7 @@ if (argv.c) {
     (git push&&
     git checkout ${argv.t}&&
     git pull&&
-    git merge ${mergeMessage} -m ${argv.m}&&
+    git merge ${argv.s} -m ${mergeMessage}&&
     ${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m+"&&" : ""}
     git push&&
     git checkout ${argv.s})`;
@@ -147,7 +147,7 @@ shell.exec(order, (error, stdout, stderr) => {
 		let order2=`git push -u origin ${argv.s}&&
 			git checkout ${argv.t}&&
 			git pull&&
-			git merge ${mergeMessage} -m ${argv.m}&&
+			git merge ${argv.s} -m ${mergeMessage}&&
 			${argv.b ? "npm run build&&git add -A&&git commit  -m " + argv.m+"&&" : ""}
 			git push&&
 			git checkout ${argv.s}`
