@@ -89,11 +89,11 @@ argv.m = argv._.join(" ");
 //为了提交信息支持空格
 argv.m = '\'' + argv.m + '\'';
 //切换分支操作提交信息必填
-if (!(argv.bdefalut !== undefined || argv.tdefalut !== undefined || argv.defalutValue)) {
-	if (argv._.length === 0) {
+// if (!(argv.bdefalut !== undefined || argv.tdefalut !== undefined || argv.defalutValue)) {
+	if (argv._.length === 0&&!argv.c) {
 		throw new Error(chalk.red.bold("Please enter commit information "));
 	}
-}
+// }
 if (argv.l) {
 	let order = `(git pull&& git add -A&& git commit -m ${argv.m}&& git push) || git push`;
 	let order2 = `git push -u origin ${argv.s}`;
@@ -111,11 +111,22 @@ if (argv.l) {
 //设置分支切换时的命令 
 let order = "";
 if (argv.c) {
-	order = `${
-		argv.b
-			? "npm run build&&git add -A&&git commit  -m " + argv.m + "&&git push&&git checkout " + argv.t
-			: "(git add -A&&git commit  -m " + argv.m + "&&git push&&git checkout " + argv.t + ")||(git push&&git checkout " + argv.t + ")"
-	}`;
+	console.log(chalk.red(argv.m))
+	if (argv._.length > 0) {
+		order = `${
+			argv.b
+				? "npm run build&&git add -A&&git commit  -m " + argv.m + "&&git push&&git checkout " + argv.t
+				: "(git add -A&&git commit  -m " + argv.m + "&&git push&&git checkout " + argv.t + ")||(git push&&git checkout " + argv.t + ")"
+		}`;
+	} else {
+		let mergeMessage=`'Conflict&Merge branch ${argv.s} into ${argv.t}'`
+		order = `${
+			argv.b
+				? "npm run build&&git add -A&&git commit  -m " + mergeMessage + "&&git push&&git checkout " + argv.t
+				: "(git add -A&&git commit  -m " + mergeMessage + "&&git push&&git checkout " + argv.t + ")||(git push&&git checkout " + argv.t + ")"
+		}`;
+	}
+	
 } else {
 	let mergeMessage=`'Merge branch ${argv.s} into ${argv.t}'`
 	order = `(git pull&&
