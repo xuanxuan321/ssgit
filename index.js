@@ -119,7 +119,7 @@ if (argv.c) {
 				: "(git add -A&&git commit  -m " + argv.m + "&&git push&&git checkout " + argv.t + ")||(git push&&git checkout " + argv.t + ")"
 		}`;
 	} else {
-		let mergeMessage=`'Conflict&Merge branch ${argv.s} into ${argv.t}'`
+		let mergeMessage=`'fix: conflict&merge branch ${argv.s} into ${argv.t}'`
 		order = `${
 			argv.b
 				? "npm run build&&git add -A&&git commit  -m " + mergeMessage + "&&git push&&git checkout " + argv.t
