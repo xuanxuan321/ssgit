@@ -95,7 +95,7 @@ argv.m = '\'' + argv.m + '\'';
 	}
 // }
 if (argv.l) {
-	let order = `(git pull&& git add -A&& git commit -m ${argv.m}&& git push) || git push`;
+	let order = `(git add -A&& git commit -m ${argv.m}&& git push) || git push`;
 	let order2 = `git push -u origin ${argv.s}`;
 	//只是提交本地变化并且推送到远程
 	shell.exec(order, (error, stdout, stderr) => {
@@ -129,7 +129,7 @@ if (argv.c) {
 	
 } else {
 	let mergeMessage=`'Merge branch ${argv.s} into ${argv.t}'`
-	order = `(git pull&&
+	order = `(
     git add -A&&
     git commit -m ${argv.m}&&
     git push&&
