@@ -96,12 +96,12 @@ argv.m = '\'' + argv.m + '\'';
 // }
 if (argv.l) {
 	let order = `(git add -A&& git commit -m ${argv.m}&& git push) || git push`;
+	console.log(chalk.green(order))
 	let order2 = `git push -u origin ${argv.s}`;
 	//只是提交本地变化并且推送到远程
 	shell.exec(order, (error, stdout, stderr) => {
 		//判断是否与远程分支关联
-		let isfirst = /git push --set-upstream/.test(stderr);
-		if (isfirst) {
+		if (/git push origin HEAD/.test(stderr)||/git push --set-upstream/.test(stderr)) {
 			console.log(chalk.green(order2))
 		shell.exec(order2)
 	}
@@ -155,8 +155,8 @@ console.log(chalk.green(order))
 //执行命令
 shell.exec(order, (error, stdout, stderr) => {
 	//判断是否与远程分支关联
-	let isfirst = /git push origin HEAD/.test(stderr);
-	if (isfirst) {
+	//当分支是从本地分支拉的时候，错误提示信息中会包含git push --set-upstream，当分支是从远程分支（比如master）拉的时候，错误提示信息中会包含git push origin HEAD
+	if (/git push origin HEAD/.test(stderr)||/git push --set-upstream/.test(stderr)) {
 		let mergeMessage=`'Merge branch ${argv.s} into ${argv.t}'`
 		let order2=`git push -u origin ${argv.s}&&
 			git checkout ${argv.t}&&
