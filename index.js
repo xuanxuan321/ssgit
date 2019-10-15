@@ -100,7 +100,7 @@ if (argv.l) {
 	//只是提交本地变化并且推送到远程
 	shell.exec(order, (error, stdout, stderr) => {
 		//判断是否与远程分支关联
-		let isfirst = /git push origin HEAD/.test(stderr);
+		let isfirst = /git push --set-upstream/.test(stderr);
 		if (isfirst) {
 			console.log(chalk.green(order2))
 		shell.exec(order2)
@@ -128,7 +128,10 @@ if (argv.c) {
 	}
 	
 } else {
-	let mergeMessage=`'Merge branch ${argv.s} into ${argv.t}'`
+	let mergeMessage = `'Merge branch ${argv.s} into ${argv.t}'`
+	// qie换到t的时候没有去合master出于两种情况考虑
+	// 1 之前基本只用t，没有那么多的t环境
+	// 2 不好判断冲突来自于哪一方，是自己的分支还是develop分支
 	order = `(
     git add -A&&
     git commit -m ${argv.m}&&
